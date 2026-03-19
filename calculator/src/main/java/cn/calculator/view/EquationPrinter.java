@@ -99,7 +99,7 @@ public final class EquationPrinter {
      * @param equations the group of equations for which to calculate the maximum
      * @return the maximum length (number of chars needed in base 10) 
      */
-    public static int maxResultPadding(final Equation[] equations) {
+    public static int maxResultLength(final Equation[] equations) {
         final boolean containsNegative = Stream.of(equations).anyMatch((eq) -> eq.result < 0d);
         final int negativeCount = containsNegative ? 1 : 0;
 
@@ -112,6 +112,24 @@ public final class EquationPrinter {
             throw new IllegalStateException("Unreachable code");
         }
         return largestSolution.get() + negativeCount;
+    }
+
+    /**
+     * Computes the maximum number of operators in a group of equations
+     * @param equations the group of equations 
+     * @return the maximum number of operators
+     */
+    public static int maxOperatorCount(final Equation[] equations) {
+        if (equations.length == 0) {
+            throw new IllegalArgumentException("`equations` must not be empty");
+        }
+
+        return Stream.of(equations)
+            .map(Equation::getTokens)
+            .map(tokens -> tokens.length)
+            .map(length -> (length - 1) / 2)
+            .max(Integer::compareTo)
+            .get();
     }
 
     /**

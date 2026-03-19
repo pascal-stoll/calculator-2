@@ -14,8 +14,9 @@ public class App {
             Equation equation = Equation.randomEquation();
             equations[i] = equation;
         }
-        final int maxResultPadding = EquationPrinter.maxResultPadding(equations);
-        final EquationPrinter printer = new EquationPrinter(5, maxResultPadding);
+        final int maxResultPadding = EquationPrinter.maxResultLength(equations);
+        final int maxOperators = EquationPrinter.maxOperatorCount(equations);
+        final EquationPrinter printer = new EquationPrinter(maxOperators, maxResultPadding);
         
         for(int j = 0; j<count; j++) {
             final String str = printer.print(equations[j], true);
