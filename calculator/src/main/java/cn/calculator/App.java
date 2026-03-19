@@ -1,9 +1,7 @@
 package cn.calculator;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import cn.calculator.calculation.Equation;
+import cn.calculator.view.EquationPrinter;
 
 /**
  * Hello world!
@@ -16,10 +14,11 @@ public class App {
             Equation equation = Equation.randomEquation();
             equations[i] = equation;
         }
-        final int maxResultPadding = Equation.maxResultPadding(equations);
+        final int maxResultPadding = EquationPrinter.maxResultPadding(equations);
+        final EquationPrinter printer = new EquationPrinter(5, maxResultPadding);
         
         for(int j = 0; j<count; j++) {
-            String str = equations[j].stringifyEquation(true, maxResultPadding);
+            final String str = printer.print(equations[j], true);
             System.out.println(str);
         }
 
