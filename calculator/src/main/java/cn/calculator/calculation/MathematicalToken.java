@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * A wrapper representing a part of an equation, which can either be a number or an operator
  */
-public final class MathmaticalToken {
+public final class MathematicalToken {
 
     public static int MAX_NUMBER = 99;
     public static int MIN_NUMBER = 1;
@@ -15,32 +15,32 @@ public final class MathmaticalToken {
     private final Optional<Operator> operator;
     private final Optional<Integer> number;
 
-    private MathmaticalToken(Optional<Operator> operator, Optional<Integer> number) {
+    private MathematicalToken(Optional<Operator> operator, Optional<Integer> number) {
         this.operator = operator;
         this.number = number;
     }
 
     /**
-     * Randomly generates a MathmaticalToken which is an operator 
-     * @return the MathmaticalToken object 
+     * Randomly generates a MathematicalToken which is an operator 
+     * @return the MathematicalToken object 
      */
-    public static MathmaticalToken randomOperator() {
+    public static MathematicalToken randomOperator() {
         final Operator operator = Operator.randomOperator();
-        return new MathmaticalToken(Optional.of(operator), Optional.empty());
+        return new MathematicalToken(Optional.of(operator), Optional.empty());
     }
 
     /**
-     * Randomly generates a MathmaticalToken which is a number
-     * @return the MathmaticalToken object
+     * Randomly generates a MathematicalToken which is a number
+     * @return the MathematicalToken object
      */
-    public static MathmaticalToken randomNumber() {
+    public static MathematicalToken randomNumber() {
         final int number = RANDOM.nextInt(MIN_NUMBER, MAX_NUMBER + 1);
-        return new MathmaticalToken(Optional.empty(), Optional.of(number));
+        return new MathematicalToken(Optional.empty(), Optional.of(number));
     }
 
     /**
      * Checks if the token is an operator 
-     * @return true if MathmaticalToken contains an operator
+     * @return true if MathematicalToken contains an operator
      */
     public boolean isOperator() {
         return !operator.isEmpty();
@@ -48,7 +48,7 @@ public final class MathmaticalToken {
 
     /**
      * Checks if the token is a number 
-     * @return true if MathmaticalToken contains a number
+     * @return true if MathematicalToken contains a number
      */
     public boolean isNumber() {
         return !number.isEmpty();

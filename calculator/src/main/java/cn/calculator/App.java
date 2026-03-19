@@ -1,27 +1,20 @@
 package cn.calculator;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import cn.calculator.controller.CalculatorController;
+import cn.calculator.view.CalculatorView;
 
-import cn.calculator.calculation.Equation;
+import javax.swing.SwingUtilities;
 
 /**
  * Hello world!
  */
 public class App {
-    public static void main(String[] args) {
-        int count = 5;
-        final Equation[] equations = new Equation[count];
-        for(int i = 0; i<count; i++) {
-            Equation equation = Equation.randomEquation();
-            equations[i] = equation;
-        }
-        final int maxResultPadding = Equation.maxResultPadding(equations);
-        
-        for(int j = 0; j<count; j++) {
-            String str = equations[j].stringifyEquation(true, maxResultPadding);
-            System.out.println(str);
-        }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            CalculatorView view = new CalculatorView();
+            CalculatorController controller = new CalculatorController(view);
+            controller.start();
+        });
     }
 }
