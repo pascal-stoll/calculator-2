@@ -76,10 +76,11 @@ public final class MathmaticalToken {
     public String toString() {
         if (isOperator()) {
             return this.operator.get().toString();
-        } else {
-            final String unpadded = number.get().toString();
-            String padded = " ".repeat(2 - unpadded.length()) + unpadded;  
-            return padded;
+        } else if(isNumber()) {
+            return this.number.get().toString();
+        }
+        else {
+            throw new IllegalStateException("Unreachable code");
         }
     }
 }

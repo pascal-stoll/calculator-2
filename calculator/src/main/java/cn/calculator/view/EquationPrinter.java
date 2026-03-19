@@ -11,7 +11,7 @@ import cn.calculator.calculation.MathmaticalToken;
  */
 public final class EquationPrinter {
     
-    public static int CHAR_PADDING = 2;
+    public static int CHAR_PADDING = 1;
 
     private final int maxOperators;
     private final int maxResultLength;
@@ -37,7 +37,7 @@ public final class EquationPrinter {
     public final String print(final Equation equation, final boolean solution) {
         StringBuilder builder = new StringBuilder();
         for (MathmaticalToken token : equation.getTokens()) {
-            builder.append(token)
+            builder.append(this.numberPadding(token))
                 .append(" ".repeat(CHAR_PADDING));
         }
         builder.append(this.operatorPadding(equation.numberOperators));
@@ -58,6 +58,20 @@ public final class EquationPrinter {
             builder.append("?");
         }
         return builder.toString();
+    }
+
+    /**
+     * Adds padding if token is a number
+     * @param token the token to be padded
+     * @return the correctly padded String 
+     */
+    private String numberPadding(final MathmaticalToken token) {
+        if(token.isOperator()) return token.getOperator().toString();
+
+        final int MAX_NUMBER_LENGTH = 2;
+        final String unpadded = String.valueOf(token.getNumber());
+        String padded = " ".repeat(MAX_NUMBER_LENGTH - unpadded.length()) + unpadded;  
+        return padded;
     }
 
     /**
