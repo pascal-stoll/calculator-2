@@ -61,7 +61,7 @@ public final class MathematicalToken {
     */
    public int getNumber() {
        return number.get();
-    }
+   }
     
     /**
      * Returns the operator, if it exists

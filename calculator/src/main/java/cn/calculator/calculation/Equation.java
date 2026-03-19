@@ -165,4 +165,8 @@ public final class Equation {
         final int positiveIndicator = isPositive ? 1 : 0;
         return " ".repeat(maxResultPadding - numberOfDigits(this.result) + positiveIndicator);
     }
+
+    public double getResult() {
+        return result;
+    }
 }

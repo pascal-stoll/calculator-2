@@ -81,4 +81,8 @@ public class CalculatorView extends JFrame {
         answerField.setEnabled(false);
         nextButton.setEnabled(false);
     }
+
+    public void closeWindow() {
+        dispose();
+    }
 }
