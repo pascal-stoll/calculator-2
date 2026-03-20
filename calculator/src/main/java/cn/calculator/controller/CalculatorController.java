@@ -8,7 +8,7 @@ import cn.calculator.view.ReportView;
 
 /**
  * The controller of the calculator quiz application.
- * It handles the quiz flow, evaluates user answers and creates the final report.
+ * It handles the control flow and moderates between the view and the model (MathTest).
  */
 public class CalculatorController {
 
@@ -18,8 +18,7 @@ public class CalculatorController {
     private long startTime;    
 
     /**
-     * Creates a controller object and connects the UI actions with the controller logic.
-     * @param view the calculator view
+     * Creates a controller object and instantiates the UI component
      */
     public CalculatorController() {
         this.view = new CalculatorView(e -> handleNextQuestion());
@@ -36,6 +35,9 @@ public class CalculatorController {
         view.focusAnswerField();
     }
 
+    /**
+     * Generates and displays a new question
+     */
     private void nextQuestion() {
         final Question nextQuestion = mathTest.generateQuestion();
         
@@ -48,8 +50,7 @@ public class CalculatorController {
 
     /**
      * Handles the transition to the next question.
-     * It first evaluates the current answer and then either shows the next equation
-     * or finishes the test.
+     * It first evaluates the current answer and then either shows the next equation or finishes the test.
      */
     private void handleNextQuestion() {
         final String answer = view.getAnswerText();
@@ -63,14 +64,13 @@ public class CalculatorController {
     }
 
     /**
-     * Finishes the test, calculates the elapsed time, builds the final report
-     * and opens the report view.
+     * Finishes the test, calculates the elapsed time, builds the final report and opens the report view.
      */
     private void finishTest() {
         long endTime = System.currentTimeMillis();
         long elapsedTime = (endTime - startTime) / 1000;
         view.closeWindow();
-        
+
         String report = new MathTestReport(mathTest, elapsedTime).buildReport();
         ReportView reportView = new ReportView(report);
         reportView.setVisible(true);

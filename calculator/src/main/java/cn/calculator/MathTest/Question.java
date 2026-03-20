@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import cn.calculator.calculation.Equation;
 
+/**
+ * Encapsulates one question of a MathTest, representing an equation together with a user's answer and the data whether it is correct or not.
+ */
 public class Question {
     
     public final int questionNumber;
@@ -13,6 +16,11 @@ public class Question {
     public AnswerStatus status;
     public Optional<Boolean> correctAnswer;
 
+    /**
+     * Private constructor, as it should only be called from the static factory method 
+     * @param questionNumber the ordinal number of the question
+     * @param equation the equation
+     */
     private Question(final int questionNumber, final Equation equation) {
         this.questionNumber = questionNumber;
         this.equation = equation;
@@ -21,15 +29,28 @@ public class Question {
         this.status = AnswerStatus.NOT_ANSWERED;
     }
 
+    /**
+     * Randomly generates an equation and wraps it in a Question object
+     * @param questionNumber the ordinal number of the question
+     * @return the Question object
+     */
     public static Question randomQuestion(final int questionNumber) {
         return new Question(questionNumber, Equation.randomEquation());
     }
 
+    /**
+     * Marks this question as skipped by the user.
+     * Is called if the question is answered with empty input. 
+     */
     public void setSkipped() {
         this.correctAnswer = Optional.of(false);
         this.status = AnswerStatus.SKIPPED;
     }
     
+    /**
+     * Evaluates the user input and saves the result.
+     * @param answer the user input 
+     */
     public void evaluateAnswer(final String answer) {
         this.answer = Optional.of(answer);
 
