@@ -18,7 +18,7 @@ public class CalculatorView extends JFrame {
     private final JButton quitButton;
     private final JLabel statusLabel;
 
-    public CalculatorView() {
+    public CalculatorView(final ActionListener nextListener) {
         // Basic window configuration
         setTitle("Math Test");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,6 +37,11 @@ public class CalculatorView extends JFrame {
         answerField = new JTextField();
         nextButton = new JButton("Next");
         quitButton = new JButton("Quit");
+
+        // Add listener
+        nextButton.addActionListener(nextListener);
+        answerField.addActionListener(nextListener); // Enter im Textfeld macht auch "Next"
+        quitButton.addActionListener(e -> System.exit(0));
 
         // Status label at the bottom showing the current question number
         statusLabel = new JLabel("Question 1", SwingConstants.CENTER);
@@ -79,15 +84,6 @@ public class CalculatorView extends JFrame {
 
     public void setStatusText(String text) {
         statusLabel.setText(text);
-    }
-
-    public void addNextListener(ActionListener listener) {
-        nextButton.addActionListener(listener);
-        answerField.addActionListener(listener); // Enter im Textfeld macht auch "Next"
-    }
-
-    public void addQuitListener(ActionListener listener) {
-        quitButton.addActionListener(listener);
     }
 
     public void closeWindow() {
