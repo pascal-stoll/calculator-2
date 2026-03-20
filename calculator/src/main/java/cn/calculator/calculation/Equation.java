@@ -70,7 +70,7 @@ public final class Equation {
      */
     public String stringifyEquation(boolean solution, Integer maxResultPadding) {
         if (maxResultPadding == null) {
-            maxResultPadding = 0;
+            maxResultPadding = 6;
         }
 
         StringBuilder builder = new StringBuilder();

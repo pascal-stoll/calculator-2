@@ -2,7 +2,7 @@ package cn.calculator.controller;
 
 import cn.calculator.MathTest.MathTest;
 import cn.calculator.MathTest.Question;
-import cn.calculator.report.ReportBuilder;
+import cn.calculator.report.MathTestReport;
 import cn.calculator.view.CalculatorView;
 import cn.calculator.view.ReportView;
 
@@ -73,7 +73,7 @@ public class CalculatorController {
         view.setStatusText("Correct answers: " + mathTest.correctAnswers + "/" + MathTest.MAX_QUESTIONS + "       "
                             + "Time: " + elapsedTime + " seconds");
 
-        String report = new ReportBuilder().buildReport(mathTest.questions, mathTest.correctAnswers, MathTest.MAX_QUESTIONS, elapsedTime);
+        String report = new MathTestReport(mathTest, elapsedTime).buildReport();
         view.closeWindow();
 
         ReportView reportView = new ReportView(report);
