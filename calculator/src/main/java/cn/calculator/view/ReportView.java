@@ -2,6 +2,7 @@ package cn.calculator.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * The graphical user interface of the quiz report.
@@ -10,9 +11,10 @@ import java.awt.*;
 public class ReportView extends JFrame {
 
     private final JTextArea reportArea;
+    private final JButton restartButton;
     private final JButton quitButton;
 
-    public ReportView(String reportText) {
+    public ReportView(String reportText, ActionListener restartListener) {
         // Basic window configuration
         setTitle("Test Report");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,10 +36,14 @@ public class ReportView extends JFrame {
         // Quit button to close the application after viewing the report
         quitButton = new JButton("Quit");
         quitButton.addActionListener(e -> System.exit(0));
-        
+
+        restartButton = new JButton("Restart");
+        restartButton.addActionListener(e -> dispose());
+        restartButton.addActionListener(restartListener);
 
         // Panel containing the button at the bottom of the window
         JPanel buttonPanel = new JPanel();
+        buttonPanel.add(restartButton);
         buttonPanel.add(quitButton);
 
         // Main layout of the report window

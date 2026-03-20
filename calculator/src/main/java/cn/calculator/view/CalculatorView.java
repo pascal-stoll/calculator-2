@@ -22,7 +22,7 @@ public class CalculatorView extends JFrame {
         // Basic window configuration
         setTitle("Math Test");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 250);
+        setSize(785, 590);
         setLocationRelativeTo(null);
 
         // Title label at the top of the window
