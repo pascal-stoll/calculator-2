@@ -2,14 +2,9 @@ package cn.calculator.controller;
 
 import cn.calculator.MathTest.MathTest;
 import cn.calculator.MathTest.Question;
-import cn.calculator.calculation.Equation;
-import cn.calculator.report.QuestionResult;
 import cn.calculator.report.ReportBuilder;
 import cn.calculator.view.CalculatorView;
 import cn.calculator.view.ReportView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The controller of the calculator quiz application.
@@ -78,7 +73,7 @@ public class CalculatorController {
         view.setStatusText("Correct answers: " + mathTest.correctAnswers + "/" + MathTest.MAX_QUESTIONS + "       "
                             + "Time: " + elapsedTime + " seconds");
 
-        String report = new ReportBuilder().buildReport(mathTest.results, mathTest.correctAnswers, MathTest.MAX_QUESTIONS, elapsedTime);
+        String report = new ReportBuilder().buildReport(mathTest.questions, mathTest.correctAnswers, MathTest.MAX_QUESTIONS, elapsedTime);
         view.closeWindow();
 
         ReportView reportView = new ReportView(report);

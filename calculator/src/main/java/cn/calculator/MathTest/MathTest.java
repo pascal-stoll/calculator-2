@@ -3,20 +3,14 @@ package cn.calculator.MathTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.calculator.report.QuestionResult;
-
 public class MathTest {
-    public final List<QuestionResult> results;
-    public int questionNumber;
+    public final List<Question> questions;
     public int correctAnswers;
-    private Question currentQuestion;
-
+    
     public static final int MAX_QUESTIONS = 3;
 
     public MathTest() {
-        this.results = new ArrayList<>();
-
-        this.questionNumber = 0;
+        this.questions = new ArrayList<>();
         this.correctAnswers = 0;
     }
 
@@ -26,40 +20,30 @@ public class MathTest {
      * If the input is numeric, it is checked against the correct result.
      */
     public void evaluateAnswer(String input) {
-        if (currentQuestion == null) {
+        if (this.questions.size() == 0) {
             throw new IllegalStateException("Equation cannot be null.");
         }
 
-        String questionText = currentQuestion.equation.stringifyEquation(false, null);
-        double correctResult = currentQuestion.equation.getResult();
+        final Question currentQuestion = this.questions.get(this.questions.size() - 1);
 
         if (input.isEmpty()) {
-            results.add(new QuestionResult(questionText, "[skipped]", correctResult, false));
-            return;
+            currentQuestion.setSkipped();
+        } else {
+            currentQuestion.evaluateAnswer(input);
         }
-
-        try {
-            double userAnswer = Double.parseDouble(input);
-            boolean isCorrect = Double.compare(userAnswer, correctResult) == 0;
-
-            if (isCorrect) {
-                correctAnswers++;
-            }
-            results.add(new QuestionResult(questionText, input, correctResult, isCorrect));
-        }
-        catch (NumberFormatException ignored) {}
     }
 
     /**
      * Generates and shows the next random equation in the view.
      */
     public Question generateQuestion() {
-        questionNumber++;
-        this.currentQuestion = Question.randomQuestion(questionNumber);
-        return this.currentQuestion;
+        final int questionNumber = this.questions.size() + 1;
+        final Question newQuestion = Question.randomQuestion(questionNumber);
+        this.questions.add(newQuestion);
+        return newQuestion;
     }
 
     public boolean testFinished() {
-        return questionNumber > MAX_QUESTIONS;
+        return this.questions.size() >= MAX_QUESTIONS;
     }
 }
