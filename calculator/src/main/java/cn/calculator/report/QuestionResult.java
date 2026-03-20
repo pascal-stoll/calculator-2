@@ -1,5 +1,10 @@
 package cn.calculator.report;
 
+/**
+ * DTO for a single quiz question.
+ * It stores the displayed equation, the user input, the correct result
+ * and whether the answer was correct.
+ */
 public class QuestionResult {
 
     private final String questionText;

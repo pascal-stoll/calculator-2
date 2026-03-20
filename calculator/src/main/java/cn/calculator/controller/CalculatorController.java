@@ -9,6 +9,10 @@ import cn.calculator.view.ReportView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The controller of the calculator quiz application.
+ * It handles the quiz flow, evaluates user answers and creates the final report.
+ */
 public class CalculatorController {
 
     private final CalculatorView view;
@@ -24,6 +28,10 @@ public class CalculatorController {
 
     private static final int MAX_QUESTIONS = 10;
 
+    /**
+     * Creates a controller object and connects the UI actions with the controller logic.
+     * @param view the calculator view
+     */
     public CalculatorController(CalculatorView view) {
         this.view = view;
         this.results = new ArrayList<>();
@@ -36,6 +44,9 @@ public class CalculatorController {
         this.view.addQuitListener(e -> System.exit(0));
     }
 
+    /**
+     * Starts the quiz, stores the start time and shows the first equation.
+     */
     public void start() {
         startTime = System.currentTimeMillis();
         showNextEquation();
@@ -43,6 +54,11 @@ public class CalculatorController {
         view.focusAnswerField();
     }
 
+    /**
+     * Handles the transition to the next question.
+     * It first evaluates the current answer and then either shows the next equation
+     * or finishes the test.
+     */
     private void handleNextQuestion() {
         if (currentEquation != null) {
             evaluateCurrentAnswer();
@@ -55,6 +71,9 @@ public class CalculatorController {
         showNextEquation();
     }
 
+    /**
+     * Generates and shows the next random equation in the view.
+     */
     private void showNextEquation() {
         currentEquation = Equation.randomEquation();
 
@@ -65,6 +84,12 @@ public class CalculatorController {
         questionNumber++;
         view.focusAnswerField();
     }
+
+    /**
+     * Evaluates the user's input for the current equation.
+     * If the input is empty, the question is stored as skipped.
+     * If the input is numeric, it is checked against the correct result.
+     */
     private void evaluateCurrentAnswer() {
         String input = view.getAnswerText();
         String questionText = currentEquation.stringifyEquation(false, null);
@@ -87,6 +112,10 @@ public class CalculatorController {
         catch (NumberFormatException ignored) {}
     }
 
+    /**
+     * Finishes the test, calculates the elapsed time, builds the final report
+     * and opens the report view.
+     */
     private void finishTest() {
         long endTime = System.currentTimeMillis();
         long elapsedTime = (endTime - startTime) / 1000;

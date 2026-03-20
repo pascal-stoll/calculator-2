@@ -2,6 +2,11 @@ package cn.calculator.report;
 
 import java.util.List;
 
+/**
+ * Builds the final report of the quiz.
+ * It formats all recorded question results, the total score
+ * and the elapsed time into a readable text report.
+ */
 public class ReportBuilder {
 
     public String buildReport(List<QuestionResult> results, int totalQuestions, int correctAnswers, long durationInSec) {
