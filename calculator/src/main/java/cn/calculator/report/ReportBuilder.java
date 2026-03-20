@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class ReportBuilder {
 
-    public String buildReport(List<QuestionResult> results, int totalQuestions, int correctAnswers, long durationInSec) {
+    public String buildReport(List<QuestionResult> results, int correctAnswers, int totalQuestions, long durationInSec) {
         StringBuilder builder = new StringBuilder();
 
         builder.append("Test Report\n");
