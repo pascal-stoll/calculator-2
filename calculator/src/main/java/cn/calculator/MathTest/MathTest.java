@@ -5,13 +5,11 @@ import java.util.List;
 
 public class MathTest {
     public final List<Question> questions;
-    public int correctAnswers;
     
     public static final int MAX_QUESTIONS = 3;
 
     public MathTest() {
         this.questions = new ArrayList<>();
-        this.correctAnswers = 0;
     }
 
     /**

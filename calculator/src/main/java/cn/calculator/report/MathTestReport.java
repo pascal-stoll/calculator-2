@@ -1,7 +1,5 @@
 package cn.calculator.report;
 
-import java.util.List;
-
 import cn.calculator.MathTest.AnswerStatus;
 import cn.calculator.MathTest.MathTest;
 import cn.calculator.MathTest.Question;

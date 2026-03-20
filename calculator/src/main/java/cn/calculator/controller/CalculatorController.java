@@ -69,13 +69,9 @@ public class CalculatorController {
     private void finishTest() {
         long endTime = System.currentTimeMillis();
         long elapsedTime = (endTime - startTime) / 1000;
-        view.setEquationText("Test completed!");
-        view.setStatusText("Correct answers: " + mathTest.correctAnswers + "/" + MathTest.MAX_QUESTIONS + "       "
-                            + "Time: " + elapsedTime + " seconds");
-
-        String report = new MathTestReport(mathTest, elapsedTime).buildReport();
         view.closeWindow();
-
+        
+        String report = new MathTestReport(mathTest, elapsedTime).buildReport();
         ReportView reportView = new ReportView(report);
         reportView.setVisible(true);
     }
