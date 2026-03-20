@@ -15,10 +15,10 @@ public final class Equation {
     public static Random RANDOM = new Random();
 
     private final int numberOperators;
-    private final MathmaticalToken[] equation;
+    private final MathematicalToken[] equation;
     private final double result;
 
-    private Equation(final int numberOperators, final MathmaticalToken[] equation) {
+    private Equation(final int numberOperators, final MathematicalToken[] equation) {
         this.numberOperators = numberOperators;
         this.equation = equation;
         this.result = evaluate();
@@ -32,12 +32,12 @@ public final class Equation {
         final int numberOperators = RANDOM.nextInt(MIN_NUMBER_OPERATORS, MAX_NUMBER_OPERATORS + 1);
         final int tokenCount = 2 * numberOperators + 1;
 
-        MathmaticalToken[] tokens = new MathmaticalToken[tokenCount];
-        tokens[0] = MathmaticalToken.randomNumber();
+        MathematicalToken[] tokens = new MathematicalToken[tokenCount];
+        tokens[0] = MathematicalToken.randomNumber();
 
         for (int i=1; i < tokenCount; i+=2) {
-            tokens[i] = MathmaticalToken.randomOperator();
-            tokens[i+1] = MathmaticalToken.randomNumber(); 
+            tokens[i] = MathematicalToken.randomOperator();
+            tokens[i+1] = MathematicalToken.randomNumber();
         }
 
         return new Equation(numberOperators, tokens);
@@ -70,11 +70,11 @@ public final class Equation {
      */
     public String stringifyEquation(boolean solution, Integer maxResultPadding) {
         if (maxResultPadding == null) {
-            maxResultPadding = 0;
+            maxResultPadding = 6;
         }
 
         StringBuilder builder = new StringBuilder();
-        for (MathmaticalToken token : equation) {
+        for (MathematicalToken token : equation) {
             builder.append(token).append(" ");
         }
         builder.append(this.operatorPadding());
@@ -98,7 +98,7 @@ public final class Equation {
         Operator currentOperator = Operator.PLUS; // default for first number
 
         for (int i = 0; i < this.equation.length; i++) {
-            MathmaticalToken token = this.equation[i];
+            MathematicalToken token = this.equation[i];
 
             if (token.isNumber()) {
                 int num = token.getNumber();
@@ -164,5 +164,9 @@ public final class Equation {
         final boolean isPositive = this.result >= 0;
         final int positiveIndicator = isPositive ? 1 : 0;
         return " ".repeat(maxResultPadding - numberOfDigits(this.result) + positiveIndicator);
+    }
+
+    public double getResult() {
+        return result;
     }
 }
