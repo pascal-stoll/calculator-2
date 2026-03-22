@@ -9,7 +9,7 @@ import java.util.List;
 public class MathTest {
     public final List<Question> questions;
     
-    public static final int MAX_QUESTIONS = 3;
+    public static final int MAX_QUESTIONS = 10;
 
     public MathTest() {
         this.questions = new ArrayList<>();

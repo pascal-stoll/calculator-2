@@ -4,9 +4,6 @@ import cn.calculator.controller.CalculatorController;
 
 import javax.swing.SwingUtilities;
 
-/**
- * Hello world!
- */
 public class App {
 
     public static void main(String[] args) {
