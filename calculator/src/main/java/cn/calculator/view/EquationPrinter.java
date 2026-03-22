@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import cn.calculator.calculation.Equation;
-import cn.calculator.calculation.MathmaticalToken;
+import cn.calculator.calculation.MathematicalToken;
 
 /**
  * Class used to pretty-print multiple equations so they are aligned at the operators, equal sign (=) and negative sign (-).
@@ -13,7 +13,9 @@ public final class EquationPrinter {
     
     public static int CHAR_PADDING = 1;
 
+    private final boolean useOperatorPadding;
     private final int maxOperators;
+    private final boolean useResultPadding;
     private final int maxResultLength;
 
     /**
@@ -25,8 +27,25 @@ public final class EquationPrinter {
         if (maxOperators < 0 || maxResultLength < 0) {
             throw new IllegalArgumentException("Arguments must be non-negative integers.");
         }
+
         this.maxOperators = maxOperators;
         this.maxResultLength = maxResultLength;
+        this.useOperatorPadding = true;
+        this.useResultPadding = true;
+    }
+
+    public EquationPrinter() {
+        this.maxOperators = 0;
+        this.maxResultLength = 0;
+        this.useOperatorPadding = false;
+        this.useResultPadding = false;
+    }
+    
+    public EquationPrinter(final int maxOperators) {
+        this.maxOperators = maxOperators;
+        this.maxResultLength = 0;
+        this.useOperatorPadding = true;
+        this.useResultPadding = false;
     }
 
     /**
@@ -36,11 +55,13 @@ public final class EquationPrinter {
      */
     public final String print(final Equation equation, final boolean solution) {
         StringBuilder builder = new StringBuilder();
-        for (MathmaticalToken token : equation.getTokens()) {
+        for (MathematicalToken token : equation.getTokens()) {
             builder.append(this.numberPadding(token))
                 .append(" ".repeat(CHAR_PADDING));
         }
-        builder.append(this.operatorPadding(equation.numberOperators));
+        if(this.useOperatorPadding) {
+            builder.append(this.operatorPadding(equation.numberOperators));
+        }
 
         builder.append("= ");
 
@@ -52,8 +73,12 @@ public final class EquationPrinter {
                 builder.append(' ');
             }
 
-            builder.append(this.resultPadding(equation.result))
-                .append(Math.abs(equation.result));
+            if(this.useResultPadding) {
+                builder.append(this.resultPadding(equation.result));
+            }
+
+            builder.append(Math.abs(equation.result));
+
         } else {
             builder.append("?");
         }
@@ -65,7 +90,7 @@ public final class EquationPrinter {
      * @param token the token to be padded
      * @return the correctly padded String 
      */
-    private String numberPadding(final MathmaticalToken token) {
+    private String numberPadding(final MathematicalToken token) {
         if(token.isOperator()) return token.getOperator().toString();
 
         final int MAX_NUMBER_LENGTH = 2;
