@@ -31,7 +31,7 @@ public class CalculatorView extends JFrame {
 
         // Label that displays the current equation
         equationLabel = new JLabel("Equation will appear here", SwingConstants.CENTER);
-        equationLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        equationLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
         // Input field and control buttons for the quiz interaction
         answerField = new JTextField();

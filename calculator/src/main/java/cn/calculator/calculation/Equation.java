@@ -1,9 +1,9 @@
 package cn.calculator.calculation;
 
-import java.util.Optional;
 import java.util.Random;
 import java.util.Stack;
-import java.util.stream.Stream;
+
+import cn.calculator.view.EquationPrinter;
 
 /**
  * The representation of an equation, that consists of MathmaticalTokens.
@@ -14,14 +14,20 @@ public final class Equation {
     public static int MAX_NUMBER_OPERATORS = 5;
     public static Random RANDOM = new Random();
 
-    private final int numberOperators;
-    private final MathematicalToken[] equation;
-    private final double result;
 
+    public final int numberOperators;
+    private final MathematicalToken[] equation;
+    public final double result;
+
+    /**
+     * Creates an equation object. The Constructur is private and only called by the static method `randomEquation`.
+     * @param numberOperators the number of operators of the equation
+     * @param equation the equation's tokens
+     */
     private Equation(final int numberOperators, final MathematicalToken[] equation) {
         this.numberOperators = numberOperators;
         this.equation = equation;
-        this.result = evaluate();
+        this.result = this.evaluate();
     }
 
     /**
@@ -43,57 +49,15 @@ public final class Equation {
         return new Equation(numberOperators, tokens);
     }
 
-    /**
-     * Calculates the 
-     * @param equations
-     * @return
-     */
-    public static int maxResultPadding(final Equation[] equations) {
-        final boolean containsNegative = Stream.of(equations).anyMatch((eq) -> eq.evaluate() < 0d);
-        final int negativeCount = containsNegative ? 1 : 0;
-
-        final Optional<Integer> largestSolution = Stream.of(equations)
-        .map(Equation::evaluate)
-        .map(Equation::numberOfDigits)
-        .max(Integer::compareTo);
-
-        if (largestSolution.isEmpty()) {
-            throw new IllegalStateException("Unreachable code");
-        }
-        return largestSolution.get() + negativeCount;
-    }
-
-    /**
-     * Generates a string of the equation
-     * @param solution indicating whether the result should be printed or not
-     * @return the string representation of the equation
-     */
-    public String stringifyEquation(boolean solution, Integer maxResultPadding) {
-        if (maxResultPadding == null) {
-            maxResultPadding = 6;
-        }
-
-        StringBuilder builder = new StringBuilder();
-        for (MathematicalToken token : equation) {
-            builder.append(token).append(" ");
-        }
-        builder.append(this.operatorPadding());
-
-        builder.append("= ");
-
-        if (solution) {
-            builder.append(this.resultPadding(maxResultPadding)).append(evaluate());
-        } else {
-            builder.append("?");
-        }
-        return builder.toString();
+    public MathematicalToken[] getTokens() {
+        return this.equation;
     }
 
     /**
      * Evaluates the equation, processing * and / before + and -
      * @return the result as float with two decimal digits 
      */
-    public double evaluate() {
+    private double evaluate() {
         final Stack<Integer> stack = new Stack<>();
         Operator currentOperator = Operator.PLUS; // default for first number
 
@@ -133,37 +97,8 @@ public final class Equation {
 
     @Override
     public String toString() {
-        return this.stringifyEquation(true, null);
-    }
-
-    /**
-     * Returns number of digits (in base 10) of a given number
-     * @param value
-     * @return
-     */
-    private static int numberOfDigits(final double value) {
-            return (int) Math.floor(Math.log10(Math.abs(value) + 1));
-    }
-
-    /**
-     * Returns the exact number of spaces needed to right-pad the equation to align the equal signs of all equations
-     * @return a String only consisting of spaces
-     */
-    private String operatorPadding() {
-        final int operatorPaddingCount = MAX_NUMBER_OPERATORS - this.numberOperators;
-        final int SPACES_PER_OPERATOR = 5;
-        return " ".repeat(operatorPaddingCount * SPACES_PER_OPERATOR);
-    }
-
-    /**
-     * Returns the exact number of spaces needed to left-pad the result to align the decimal point 
-     * @param maxResultPadding a String consisting of spaces
-     * @return
-     */
-    private String resultPadding(final int maxResultPadding) {
-        final boolean isPositive = this.result >= 0;
-        final int positiveIndicator = isPositive ? 1 : 0;
-        return " ".repeat(maxResultPadding - numberOfDigits(this.result) + positiveIndicator);
+        final EquationPrinter printer = new EquationPrinter(this.numberOperators, EquationPrinter.getLength(this.result));
+        return printer.print(this, true);
     }
 
     public double getResult() {

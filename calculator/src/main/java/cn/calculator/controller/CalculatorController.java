@@ -4,6 +4,7 @@ import cn.calculator.MathTest.MathTest;
 import cn.calculator.MathTest.Question;
 import cn.calculator.report.MathTestReport;
 import cn.calculator.view.CalculatorView;
+import cn.calculator.view.EquationPrinter;
 import cn.calculator.view.ReportView;
 
 /**
@@ -45,8 +46,8 @@ public class CalculatorController {
      */
     private void nextQuestion() {
         final Question nextQuestion = mathTest.generateQuestion();
-        
-        view.setEquationText(nextQuestion.equation.stringifyEquation(false, null));
+        final String equationString = new EquationPrinter(5).print(nextQuestion.equation, false);
+        view.setEquationText(equationString);
         view.clearAnswerField();
         view.setStatusText("Question " + nextQuestion.questionNumber + " of " + MathTest.MAX_QUESTIONS);
 
