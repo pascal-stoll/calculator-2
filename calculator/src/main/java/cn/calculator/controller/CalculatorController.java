@@ -12,8 +12,8 @@ import cn.calculator.view.ReportView;
  */
 public class CalculatorController {
 
-    private final CalculatorView view;
-    private final MathTest mathTest;
+    private CalculatorView view;
+    private MathTest mathTest;
     
     private long startTime;    
 
@@ -24,11 +24,16 @@ public class CalculatorController {
         this.view = new CalculatorView(e -> handleNextQuestion());
         this.mathTest = new MathTest();
     }
-
+    
+    private void restartTest() {
+        this.view = new CalculatorView(e -> handleNextQuestion());
+        this.mathTest = new MathTest();
+        startTest();
+    }
     /**
-     * Starts the quiz, stores the start time and shows the first equation.
-     */
-    public void startTest() {
+     * Instantiates and starts the quiz, stores the start time and shows the first equation.
+    */
+   public void startTest() {
         this.startTime = System.currentTimeMillis();
         nextQuestion();
         view.setVisible(true);
@@ -72,7 +77,7 @@ public class CalculatorController {
         view.closeWindow();
 
         String report = new MathTestReport(mathTest, elapsedTime).buildReport();
-        ReportView reportView = new ReportView(report);
+        ReportView reportView = new ReportView(report, e -> restartTest());
         reportView.setVisible(true);
     }
 }
