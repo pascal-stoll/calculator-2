@@ -14,8 +14,9 @@ public final class Equation {
     public static int MAX_NUMBER_OPERATORS = 5;
     public static Random RANDOM = new Random();
 
+
     public final int numberOperators;
-    private final MathmaticalToken[] equation;
+    private final MathematicalToken[] equation;
     public final double result;
 
     /**
@@ -23,7 +24,7 @@ public final class Equation {
      * @param numberOperators the number of operators of the equation
      * @param equation the equation's tokens
      */
-    private Equation(final int numberOperators, final MathmaticalToken[] equation) {
+    private Equation(final int numberOperators, final MathematicalToken[] equation) {
         this.numberOperators = numberOperators;
         this.equation = equation;
         this.result = this.evaluate();
@@ -37,20 +38,20 @@ public final class Equation {
         final int numberOperators = RANDOM.nextInt(MIN_NUMBER_OPERATORS, MAX_NUMBER_OPERATORS + 1);
         final int tokenCount = 2 * numberOperators + 1;
 
-        MathmaticalToken[] tokens = new MathmaticalToken[tokenCount];
-        tokens[0] = MathmaticalToken.randomNumber();
+        MathematicalToken[] tokens = new MathematicalToken[tokenCount];
+        tokens[0] = MathematicalToken.randomNumber();
 
         for (int i=1; i < tokenCount; i+=2) {
-            tokens[i] = MathmaticalToken.randomOperator();
-            tokens[i+1] = MathmaticalToken.randomNumber(); 
+            tokens[i] = MathematicalToken.randomOperator();
+            tokens[i+1] = MathematicalToken.randomNumber();
         }
 
         return new Equation(numberOperators, tokens);
     }
 
-    public MathmaticalToken[] getTokens() {
+    public MathematicalToken[] getTokens() {
         return this.equation;
-    } 
+    }
 
     /**
      * Evaluates the equation, processing * and / before + and -
@@ -61,7 +62,7 @@ public final class Equation {
         Operator currentOperator = Operator.PLUS; // default for first number
 
         for (int i = 0; i < this.equation.length; i++) {
-            MathmaticalToken token = this.equation[i];
+            MathematicalToken token = this.equation[i];
 
             if (token.isNumber()) {
                 int num = token.getNumber();
@@ -98,5 +99,9 @@ public final class Equation {
     public String toString() {
         final EquationPrinter printer = new EquationPrinter(this.numberOperators, EquationPrinter.getLength(this.result));
         return printer.print(this, true);
+    }
+
+    public double getResult() {
+        return result;
     }
 }
